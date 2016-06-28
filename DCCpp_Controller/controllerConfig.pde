@@ -284,7 +284,9 @@
     
     powerButton=new PowerButton(75,475,100,30,100,18,"POWER");
     new QuitButton(200,475,100,30,250,18,"QUIT");
-    currentMeter = new CurrentMeter(25,550,150,100,675,5);
+    // 675 == Arduino motor shield 2A current limit, based on 1.65V/A and analogRead 0-1023 scale having 0.0049V/step.
+    // 214 == Pololu motor shielf 2A current limit, based on 0.525V/A and same analog read stuff.
+    currentMeter = new CurrentMeter(25,550,150,100,214,5);
 
 // CREATE THROTTLE, DEFINE CAB BUTTONS, and SET FUNCTIONS FOR EACH CAB
     
@@ -295,13 +297,13 @@
 
     throttleA=new Throttle(tAx,tAy,1.3);
     
-    cab2004 = new CabButton(tAx-125,tAy-150,50,30,150,15,2004,throttleA);
+    cab2004 = new CabButton(tAx-125,tAy-150,50,30,150,15,3,throttleA);
     cab2004.setThrottleDefaults(100,50,-50,-45);
     cab2004.functionButtonWindow(220,59,70,340,backgroundColor,backgroundColor);
     cab2004.setFunction(35,15,60,22,60,10,0,"Headlight",ButtonType.NORMAL,CabFunction.F_LIGHT);
     cab2004.setFunction(35,45,60,22,60,10,1,"Tailight",ButtonType.NORMAL,CabFunction.R_LIGHT);
     
-    cab622 = new CabButton(tAx-125,tAy-100,50,30,150,15,622,throttleA);
+    cab622 = new CabButton(tAx-125,tAy-100,50,30,150,15,100,throttleA);
     cab622.setThrottleDefaults(53,30,-20,-13);
     cab622.functionButtonWindow(220,59,70,340,backgroundColor,backgroundColor);
     cab622.setFunction(35,15,60,22,60,10,0,"Headlight",ButtonType.NORMAL,CabFunction.F_LIGHT);
