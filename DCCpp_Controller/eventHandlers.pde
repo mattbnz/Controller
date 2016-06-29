@@ -169,6 +169,9 @@ void clientEvent(Client c){
         } else if(c.equals("3")){
           msgBoxMain.setMessage("PROG Track Current Overload - Power Off",color(200,30,30));
           powerButton.isOn=false;
+        } else if(c.equals("sf")){
+          msgBoxMain.setMessage("Motor Shield Fault (current overload?) - Power Off",color(200,30,30));
+          powerButton.isOn=false;
         }
         break;
 
