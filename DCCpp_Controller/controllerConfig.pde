@@ -375,675 +375,111 @@
 
 // CREATE AUTO PILOT BUTTON and CLEANING CAR BUTTON (must be done AFTER cab buttons are defined above)
 
-    autoPilot=new AutoPilotButton(325,550,100,50,30,18,"AUTO\nPILOT");
+    autoPilot=new AutoPilotButton(325,650,100,50,30,18,"AUTO\nPILOT");
     cleaningCab=new CleaningCarButton(extrasWindow,28,80,80,120,50,40,16,"Cleaning\nCar");        
       
 // CREATE MAIN LAYOUT AND DEFINE ALL TRACKS
+    colorMode(RGB, 255);
+    Layout baseLayout = new Layout(325,50,width-325,4180, 3100); // x in px, y in px, width in px, width in mm, height in mm
     
-    layout=new Layout(325,50,1000,80*25.4,36*25.4);
+    Track topLeft = new Track(baseLayout, 0, 0, 10, 0);
+    Track topRight = new Track(baseLayout, 4170, 0, 10, 0);
+    Track bottomLeft = new Track(baseLayout, 0, 3050, 10, 0);
+    Track bottomRight = new Track(baseLayout, 4170, 3050, 10, 0);
     
-    Track bridgeA = new Track(layout,20,450,62,90);
-    Track bridgeB = new Track(bridgeA,1,348,-90);
-    Track bridgeC = new Track(bridgeB,1,399);
-    Track t5A = new Track(bridgeC,1,126);
-    Track loop3A = new Track(t5A,1,682);
-    Track loop3B = new Track(loop3A,1,381,-180);
-    Track loop3C = new Track(loop3B,1,124);
-    Track t20A2 = new Track(loop3C,1,126);
-    Track t20B2 = new Track(loop3C,1,481,15);
-    Track t20B1 = new Track(t20B2,1,481,-15);
-    Track loop2A3A = new Track(t20A2,1,120);
-    Track t30A1 = new Track(loop2A3A,1,126);
-    Track t30A2 = new Track(t30A1,1,126);
-    Track t30B1 = new Track(loop2A3A,1,481,-15);
-    Track t30B4 = new Track(t30B1,1,481,15);
-    Track loop2C = new Track(t30A2,1,122);
-    Track t10A3 = new Track(loop2C,1,126);
-    Track t10B3 = new Track(loop2C,1,481,15);
-    Track t10A4 = new Track(t10A3,1,126);
-    Track t10B2 = new Track(t10B3,1,481,-15);
-    Track loop2D = new Track(t10A4,1,62);
-    Track loop2E = new Track(loop2D,1,315,-165);
-    Track loop2F = new Track(loop2E,1,128);
-    Track loop2G = new Track(loop2F,1,315,-15);
-    Track loop2H = new Track(loop2G,1,742);
-    Track t50A2 = new Track(loop2H,1,126);
-    Track loop2A = new Track(t50A2,1,315,-180);
-    Track loop2B = new Track(loop2A,1,308);
-    Track t30A3 = new Track(loop2B,1,126);
-    Track t30A4 = new Track(t30A3,1,126);
-    Track t30B3 = new Track(loop2B,1,481,15);
-    Track t30B2 = new Track(t30B3,1,481,-15);
-    Track loop1A2A = new Track(t30A4,1,60);
-    Track t40A1 = new Track(loop1A2A,1,126);
-    Track loop1B = new Track(t40A1,1,248);
-    Track loop1C = new Track(loop1B,1,282,-165);
-    Track loop1D = new Track(loop1C,1,128);
-    Track loop1E = new Track(loop1D,1,282,-15);
-    Track t4A = new Track(loop1E,1,126);
-    Track t4B = new Track(loop1E,1,481,-15);
-    Track loop1F = new Track(t4A,1,494);
-    Track t50A1 = new Track(loop1F,1,126);
-    Track t50B1 = new Track(loop1F,1,481,15);
-    Track t50B2 = new Track(t50B1,1,481,-15);
-    Track loop1G = new Track(t50A1,1,122);
-    Track loop1H = new Track(loop1G,1,282,-180);
-    Track loop1I = new Track(loop1H,1,62);
-    Track t1A = new Track(loop1I,1,126);
-    Track t1B = new Track(loop1I,1,481,-15);
-    Track loop1A = new Track(t1A,1,308);
-    Track t40A2 = new Track(loop1A,1,126);
-    Track t40B2 = new Track(loop1A,1,481,15);
-    Track t40B1 = new Track(t40B2,1,481,-15);
-    Track s1A = new Track(t40A2,1,60);
-    Track s1B = new Track(s1A,1,481,-15);
-    Track s1C = new Track(s1B,1,339);
-    Track s1 = new Track(s1C,1,50);
-    Track loop3D = new Track(t20B1,1,370);
-    Track t20A1 = new Track(loop3D,0,126);
-    Track t10A1 = new Track(loop3D,1,126);
-    Track t10B1 = new Track(loop3D,1,481,-15);
-    Track t10B4 = new Track(t10B1,1,481,15);
-    Track t10A2 = new Track(t10A1,1,126);
-    Track loop3E = new Track(t10A2,1,62);
-    Track loop3F = new Track(loop3E,1,381,-180);
-    Track loop3G = new Track(loop3F,1,124);
-    Track loop3H = new Track(loop3G,1,481,15);
-    Track t5B = new Track(loop3H,1,481,-15);
-    Track s7A = new Track(t20A1,1,337);
-    Track s7B = new Track(s7A,1,348,90);
-    Track s7C = new Track(s7B,1,124);
-    Track s7D = new Track(s7C,1,481,15);
-    Track s7E = new Track(s7D,1,124);
-    Track s7 = new Track(s7E,1,62);
-    Track t2A = new Track(t1B,1,126);
-    Track t2B = new Track(t1B,1,481,-15);
-    Track s2_3_4_5A = new Track(t2A,1,64);
-    Track t3A = new Track(s2_3_4_5A,1,126);
-    Track t3B = new Track(s2_3_4_5A,1,481,15);
-    Track s2A = new Track(t3B,1,30);
-    Track s2B = new Track(s2A,1,481,15);
-    Track s2C = new Track(s2B,1,481,-30);
-    Track s2D = new Track(s2C,1,248);
-    Track s2 = new Track(s2D,1,50);
-    Track t6A = new Track(t3A,1,126);
-    Track t6B = new Track(t3A,1,481,-15);
-    Track s3A = new Track(t6A,1,556);
-    Track s3 = new Track(s3A,1,50);
-    Track t9A = new Track(t6B,1,126);
-    Track t9B = new Track(t6B,1,481,15);
-    Track s4A = new Track(t9B,1,479);
-    Track s4 = new Track(s4A,1,50);
-    Track s5A = new Track(t9A,1,481,15);
-    Track s5B = new Track(s5A,1,341);
-    Track s5 = new Track(s5B,1,50);
-    Track rLoopA = new Track(t4B,1,282,-45);
-    Track rLoopB = new Track(rLoopA,1,87);
-    Track t7A = new Track(rLoopB,1,126);
-    Track t7B = new Track(rLoopB,1,481,15);
-    Track rLoopC = new Track(t7A,1,481,15);
-    Track rLoopD = new Track(rLoopC,1,425,15);
-    Track s6A = new Track(t7B,1,60);
-    Track s6B = new Track(s6A,1,282,45);
-    Track s6C = new Track(s6B,1,481,30);
-    Track s6D = new Track(s6C,1,188);
-    Track s6 = new Track(s6D,1,50);
-    Track bridgeD = new Track(bridgeA,0,348,60);
+    // The 90mm straight in the middle of the curve at the very
+    // left hand end of the table serves as our anchor for the
+    // rest of the base loop.
+    Track leftAnchor = new Track(baseLayout, 184, 569, 90, 270); // 1 x 5107
     
-// CREATE SECOND LAYOUT FOR SKY BRIDGE AND DEFINE TRACKS
+    Track leftLowerCurve = new Track(leftAnchor, 1, 360, 90); // 3 x 5100
+    Track leftUpperCurve = new Track(leftAnchor, 0, 360, -60); // 2 x 5100
     
-    layout2=new Layout(325,500,400,80*25.4,36*25.4);
-    layoutBridge=new Layout(layout2);
+    Track stationExit = defineStation(leftLowerCurve);
+    Track townExit = defineTown(leftUpperCurve);
+    Track bottomLoop = defineBottomLoop(townExit);
     
-    Track bridgeE = new Track(bridgeD,1,348,60,layoutBridge);
-    Track bridgeF = new Track(bridgeE,1,248);
-    Track t8A = new Track(bridgeF,1,200);
-    Track t8B = new Track(bridgeF,1,400,-35);
-    Track bridgeG = new Track(t8A,1,618);
-    Track bridgeH = new Track(bridgeG,1,282,-226);
-    Track bridgeI = new Track(bridgeH,1,558);
-    
-// DEFINE SENSORS, MAP TO ARDUINO NUMBERS, AND INDICATE THEIR TRACK LOCATIONS
-
-    new TrackSensor(loop3B,1,30,20,20,1,false);          // mappings from Sensor numbers (1..N) to Arduino Pins
-    new TrackSensor(t50A2,1,315,-174,20,20,2,false);
-    new TrackSensor(loop2D,1,315,-47,20,20,3,false);
-    new TrackSensor(loop1B,1,282,-45,20,20,4,false);
-    new TrackSensor(loop3E,1,381,-45,20,20,5,false);
-    new TrackSensor(bridgeA,1,348,-10,20,20,6,false);
-    new TrackSensor(s1A,1,481,-5,20,20,7,true);
-    new TrackSensor(s2B,1,481,-5,20,20,8,true);
-    new TrackSensor(t6A,1,175,20,20,9,true);
-    new TrackSensor(s6A,1,282,10,20,20,10,true);
-    new TrackSensor(loop1G,1,282,-137,20,20,11,false);
-    new TrackSensor(t9B,1,100,20,20,12,true);
-    new TrackSensor(s5A,1,30,20,20,13,true);
-    new TrackSensor(s7A,1,348,50,20,20,14,true);
-    
-// CREATE TURNOUT BUTTONS and ADD TRACKS FOR EACH TURNOUT
-
-    tButton1 = new TrackButton(20,20,1);
-    tButton1.addTrack(t1A,0);
-    tButton1.addTrack(t1B,1);
-    
-    tButton2 = new TrackButton(20,82,2);
-    tButton2.addTrack(t2A,0);
-    tButton2.addTrack(t2B,1);
-    
-    tButton3 = new TrackButton(20,20,3);
-    tButton3.addTrack(t3A,0);
-    tButton3.addTrack(t3B,1);
-    
-    tButton4 = new TrackButton(20,20,4);
-    tButton4.addTrack(t4A,0);
-    tButton4.addTrack(t4B,1);
-
-    tButton5 = new TrackButton(20,20,5);
-    tButton5.addTrack(t5A,0);
-    tButton5.addTrack(t5B,1);
-       
-    tButton6 = new TrackButton(20,20,6);
-    tButton6.addTrack(t6A,0);
-    tButton6.addTrack(t6B,1);
-
-    tButton7 = new TrackButton(20,20,7);
-    tButton7.addTrack(t7A,0);
-    tButton7.addTrack(t7B,1);
-
-    tButton8 = new TrackButton(20,20,8);
-    tButton8.addTrack(t8A,0);
-    tButton8.addTrack(t8B,1);
-    
-    tButton9 = new TrackButton(20,20,9);
-    tButton9.addTrack(t9A,0);
-    tButton9.addTrack(t9B,1);
-
-    tButton10 = new TrackButton(20,20,10);
-    tButton10.addTrack(t10A1,0);
-    tButton10.addTrack(t10A2,0);
-    tButton10.addTrack(t10A3,0);
-    tButton10.addTrack(t10A4,0);
-    tButton10.addTrack(t10B1,1);
-    tButton10.addTrack(t10B2,1);
-    tButton10.addTrack(t10B3,1);
-    tButton10.addTrack(t10B4,1);
-
-    tButton20 = new TrackButton(20,20,20);
-    tButton20.addTrack(t20A1,0);
-    tButton20.addTrack(t20A2,0);
-    tButton20.addTrack(t20B1,1);
-    tButton20.addTrack(t20B2,1);
-
-    tButton30 = new TrackButton(20,20,30);
-    tButton30.addTrack(t30A1,0);
-    tButton30.addTrack(t30A2,0);
-    tButton30.addTrack(t30A3,0);
-    tButton30.addTrack(t30A4,0);
-    tButton30.addTrack(t30B1,1);
-    tButton30.addTrack(t30B2,1);
-    tButton30.addTrack(t30B3,1);
-    tButton30.addTrack(t30B4,1);
-
-    tButton40 = new TrackButton(20,20,40);
-    tButton40.addTrack(t40A1,0);
-    tButton40.addTrack(t40A2,0);
-    tButton40.addTrack(t40B1,1);
-    tButton40.addTrack(t40B2,1);
-
-    tButton50 = new TrackButton(20,20,50);
-    tButton50.addTrack(t50A1,0);
-    tButton50.addTrack(t50A2,0);
-    tButton50.addTrack(t50B1,1);
-    tButton50.addTrack(t50B2,1);
-
-// CREATE ROUTE BUTTONS and ADD TRACKS and TURNOUT BUTTONS
-
-    rButton1 = new RouteButton(s1,20,20);
-    rButton1.addTrackButton(tButton40,0);
-    rButton1.addTrackButton(tButton1,0);
-    rButton1.addTrack(t1A);
-    rButton1.addTrack(loop1A);
-    rButton1.addTrack(t40A2);
-    rButton1.addTrack(s1A);
-    rButton1.addTrack(s1B);
-    rButton1.addTrack(s1C);
-    rButton1.addTrack(s1);
-    
-    rButton2 = new RouteButton(s2,20,20);
-    rButton2.addTrackButton(tButton3,1);
-    rButton2.addTrackButton(tButton2,0);
-    rButton2.addTrackButton(tButton1,1);
-    rButton2.addTrack(t1B);
-    rButton2.addTrack(t2A);
-    rButton2.addTrack(s2_3_4_5A);
-    rButton2.addTrack(t3B);
-    rButton2.addTrack(s2A);
-    rButton2.addTrack(s2B);
-    rButton2.addTrack(s2C);
-    rButton2.addTrack(s2D);
-    rButton2.addTrack(s2);
-
-    rButton3 = new RouteButton(s3,20,20);
-    rButton3.addTrackButton(tButton6,0);
-    rButton3.addTrackButton(tButton3,0);
-    rButton3.addTrackButton(tButton2,0);
-    rButton3.addTrackButton(tButton1,1);
-    rButton3.addTrack(t1B);
-    rButton3.addTrack(t2A);
-    rButton3.addTrack(s2_3_4_5A);
-    rButton3.addTrack(t3A);
-    rButton3.addTrack(t6A);
-    rButton3.addTrack(s3A);
-    rButton3.addTrack(s3);
-
-    rButton4 = new RouteButton(s4,20,20);
-    rButton4.addTrackButton(tButton9,1);
-    rButton4.addTrackButton(tButton6,1);
-    rButton4.addTrackButton(tButton3,0);
-    rButton4.addTrackButton(tButton2,0);
-    rButton4.addTrackButton(tButton1,1);
-    rButton4.addTrack(t1B);
-    rButton4.addTrack(t2A);
-    rButton4.addTrack(s2_3_4_5A);
-    rButton4.addTrack(t3A);
-    rButton4.addTrack(t6B);
-    rButton4.addTrack(t9B);
-    rButton4.addTrack(s4A);
-    rButton4.addTrack(s4);
-
-    rButton5 = new RouteButton(s5,20,20);
-    rButton5.addTrackButton(tButton9,0);
-    rButton5.addTrackButton(tButton6,1);
-    rButton5.addTrackButton(tButton3,0);
-    rButton5.addTrackButton(tButton2,0);
-    rButton5.addTrackButton(tButton1,1);
-    rButton5.addTrack(t1B);
-    rButton5.addTrack(t2A);
-    rButton5.addTrack(s2_3_4_5A);
-    rButton5.addTrack(t3A);
-    rButton5.addTrack(t6B);
-    rButton5.addTrack(t9A);
-    rButton5.addTrack(s5A);
-    rButton5.addTrack(s5B);
-    rButton5.addTrack(s5);
-
-    rButton6 = new RouteButton(s6,20,20);
-    rButton6.addTrackButton(tButton7,1);
-    rButton6.addTrackButton(tButton4,1);
-    rButton6.addTrack(t7B);
-    rButton6.addTrack(t4B);
-    rButton6.addTrack(rLoopA);
-    rButton6.addTrack(rLoopB);
-    rButton6.addTrack(s6A);
-    rButton6.addTrack(s6B);
-    rButton6.addTrack(s6C);
-    rButton6.addTrack(s6D);
-    rButton6.addTrack(s6);    
-
-    rButton7 = new RouteButton(s7,20,20);
-    rButton7.addTrackButton(tButton20,0);
-    rButton7.addTrackButton(tButton10,0);
-    rButton7.addTrack(t20A1);
-    rButton7.addTrack(t10A1);
-    rButton7.addTrack(t10A2);
-    rButton7.addTrack(s7A);
-    rButton7.addTrack(s7B);
-    rButton7.addTrack(s7C);
-    rButton7.addTrack(s7D);
-    rButton7.addTrack(s7E);
-    rButton7.addTrack(s7);
-    rButton7.addTrack(loop3D);
-
-    rButton10 = new RouteButton(rX,rY,80,40,"Inner\nLoop");
-    rButton10.addTrackButton(tButton50,0);
-    rButton10.addTrackButton(tButton1,0);
-    rButton10.addTrackButton(tButton40,1);
-    rButton10.addTrackButton(tButton4,0);    
-    rButton10.addTrack(t40B1);
-    rButton10.addTrack(t40B2);
-    rButton10.addTrack(t4A);
-    rButton10.addTrack(t50A1);
-    rButton10.addTrack(t1A);    
-    rButton10.addTrack(loop1A);
-    rButton10.addTrack(loop1B);
-    rButton10.addTrack(loop1C);
-    rButton10.addTrack(loop1D);
-    rButton10.addTrack(loop1E);
-    rButton10.addTrack(loop1F);
-    rButton10.addTrack(loop1G);
-    rButton10.addTrack(loop1H);
-    rButton10.addTrack(loop1I);
-
-    rButton11 = new RouteButton(rX+200,rY,80,40,"Middle\nLoop");
-    rButton11.addTrackButton(tButton50,0);
-    rButton11.addTrackButton(tButton30,1);
-    rButton11.addTrackButton(tButton10,0);
-    rButton11.addTrack(t50A2);
-    rButton11.addTrack(t30B3);
-    rButton11.addTrack(t30B2);
-    rButton11.addTrack(t10A3);
-    rButton11.addTrack(t10A4);    
-    rButton11.addTrack(loop2A);
-    rButton11.addTrack(loop2B);
-    rButton11.addTrack(loop2C);
-    rButton11.addTrack(loop2D);
-    rButton11.addTrack(loop2E);
-    rButton11.addTrack(loop2F);
-    rButton11.addTrack(loop2G);
-    rButton11.addTrack(loop2H);
-
-    rButton12 = new RouteButton(rX+400,rY,80,40,"Outer\nLoop");
-    rButton12.addTrackButton(tButton20,1);
-    rButton12.addTrackButton(tButton5,1);
-    rButton12.addTrackButton(tButton10,0);
-    rButton12.addTrack(t20B2);
-    rButton12.addTrack(t20B1);
-    rButton12.addTrack(t10A1);
-    rButton12.addTrack(t10A2);
-    rButton12.addTrack(t5B);    
-    rButton12.addTrack(loop3A);
-    rButton12.addTrack(loop3B);
-    rButton12.addTrack(loop3C);
-    rButton12.addTrack(loop3D);
-    rButton12.addTrack(loop3E);
-    rButton12.addTrack(loop3F);
-    rButton12.addTrack(loop3G);
-    rButton12.addTrack(loop3H);
-    
-    rButton13 = new RouteButton(rX+100,rY,80,40,"Inner/Mid");
-    rButton13.addTrackButton(tButton50,1);
-    rButton13.addTrackButton(tButton30,0);
-    rButton13.addTrackButton(tButton40,0);
-    rButton13.addTrackButton(tButton4,0);    
-    rButton13.addTrack(t40A1);
-    rButton13.addTrack(loop1B);
-    rButton13.addTrack(loop1C);
-    rButton13.addTrack(loop1D);
-    rButton13.addTrack(loop1E);
-    rButton13.addTrack(t4A);
-    rButton13.addTrack(loop1F);
-    rButton13.addTrack(t50B1);
-    rButton13.addTrack(t50B2);
-    rButton13.addTrack(loop2A);
-    rButton13.addTrack(loop2B);
-    rButton13.addTrack(t30A3);
-    rButton13.addTrack(t30A4);    
-    rButton13.addTrack(loop1A2A);
-
-    rButton14 = new RouteButton(rX+300,rY,80,40,"Mid/Outer");
-    rButton14.addTrackButton(tButton5,1);
-    rButton14.addTrackButton(tButton20,0);
-    rButton14.addTrackButton(tButton30,0);
-    rButton14.addTrackButton(tButton10,1);
-    rButton14.addTrack(t5B);
-    rButton14.addTrack(loop3A);
-    rButton14.addTrack(loop3B);
-    rButton14.addTrack(loop3C);
-    rButton14.addTrack(t20A2);
-    rButton14.addTrack(loop2A3A);
-    rButton14.addTrack(t30A1);
-    rButton14.addTrack(t30A2);
-    rButton14.addTrack(loop2C);
-    rButton14.addTrack(t10B3);
-    rButton14.addTrack(t10B2);
-    rButton14.addTrack(loop3E);
-    rButton14.addTrack(loop3F);
-    rButton14.addTrack(loop3G);
-    rButton14.addTrack(loop3H);    
-
-    rButtonR1 = new RouteButton(rX,rY+60,80,40,"Reverse+");
-    rButtonR1.addTrackButton(tButton4,1);
-    rButtonR1.addTrackButton(tButton7,0);
-    rButtonR1.addTrackButton(tButton1,0);
-    rButtonR1.addTrack(t4B);
-    rButtonR1.addTrack(rLoopA);
-    rButtonR1.addTrack(rLoopB);
-    rButtonR1.addTrack(t7A);
-    rButtonR1.addTrack(t1A);
-
-    rButtonR2 = new RouteButton(rX+100,rY+60,80,40,"Reverse-");
-    rButtonR2.addTrackButton(tButton1,1);
-    rButtonR2.addTrackButton(tButton2,1);
-    rButtonR2.addTrackButton(tButton4,0);
-    rButtonR2.addTrack(t4A);
-    rButtonR2.addTrack(t1B);
-    rButtonR2.addTrack(t2B);
-    rButtonR2.addTrack(rLoopC);    
-    rButtonR2.addTrack(rLoopD);    
-
-    rButton15 = new RouteButton(rX+200,rY+60,80,40,"Mid+Outer");
-    rButton15.addTrackButton(tButton5,1);
-    rButton15.addTrackButton(tButton10,1);
-    rButton15.addTrackButton(tButton20,1);
-    rButton15.addTrackButton(tButton30,1);
-    rButton15.addTrackButton(tButton50,0);
-    rButton15.addTrack(t20B2);
-    rButton15.addTrack(t20B1);
-    rButton15.addTrack(t10B1);
-    rButton15.addTrack(t10B2);
-    rButton15.addTrack(t5B);    
-    rButton15.addTrack(loop3A);
-    rButton15.addTrack(loop3B);
-    rButton15.addTrack(loop3C);
-    rButton15.addTrack(loop3D);
-    rButton15.addTrack(loop3E);
-    rButton15.addTrack(loop3F);
-    rButton15.addTrack(loop3G);
-    rButton15.addTrack(loop3H);
-    rButton15.addTrack(t50A2);
-    rButton15.addTrack(t30B3);
-    rButton15.addTrack(t30B2);
-    rButton15.addTrack(t10B3);
-    rButton15.addTrack(t10B4);    
-    rButton15.addTrack(loop2A);
-    rButton15.addTrack(loop2B);
-    rButton15.addTrack(loop2C);
-    rButton15.addTrack(loop2D);
-    rButton15.addTrack(loop2E);
-    rButton15.addTrack(loop2F);
-    rButton15.addTrack(loop2G);
-    rButton15.addTrack(loop2H);
-
-    rButton16 = new RouteButton(rX+300,rY+60,80,40,"In+Outer");
-    rButton16.addTrackButton(tButton4,0);
-    rButton16.addTrackButton(tButton5,1);
-    rButton16.addTrackButton(tButton10,1);
-    rButton16.addTrackButton(tButton20,0);
-    rButton16.addTrackButton(tButton30,1);
-    rButton16.addTrackButton(tButton40,0);
-    rButton16.addTrackButton(tButton50,1);
-    rButton16.addTrack(t40A1);
-    rButton16.addTrack(loop1B);
-    rButton16.addTrack(loop1C);
-    rButton16.addTrack(loop1D);
-    rButton16.addTrack(loop1E);
-    rButton16.addTrack(t4A);
-    rButton16.addTrack(loop1F);
-    rButton16.addTrack(t50B1);
-    rButton16.addTrack(t50B2);
-    rButton16.addTrack(loop2A);
-    rButton16.addTrack(loop2B);
-    rButton16.addTrack(t30B1);
-    rButton16.addTrack(t30B2);    
-    rButton16.addTrack(t30B3);
-    rButton16.addTrack(t30B4);    
-    rButton16.addTrack(loop1A2A);
-    rButton16.addTrack(t5B);
-    rButton16.addTrack(loop3A);
-    rButton16.addTrack(loop3B);
-    rButton16.addTrack(loop3C);
-    rButton16.addTrack(t20A2);
-    rButton16.addTrack(loop2A3A);
-    rButton16.addTrack(loop2C);
-    rButton16.addTrack(t10B3);
-    rButton16.addTrack(t10B2);
-    rButton16.addTrack(loop3E);
-    rButton16.addTrack(loop3F);
-    rButton16.addTrack(loop3G);
-    rButton16.addTrack(loop3H);    
-    
-    rButton17 = new RouteButton(rX,rY+120,80,40,"Double X");
-    rButton17.addTrackButton(tButton5,0);
-    rButton17.addTrackButton(tButton20,0);
-    rButton17.addTrackButton(tButton30,1);
-    rButton17.addTrackButton(tButton40,0);
-    rButton17.addTrackButton(tButton50,0);
-    rButton17.addTrackButton(tButton4,1);
-    rButton17.addTrackButton(tButton7,0);
-    rButton17.addTrackButton(tButton1,0);
-    rButton17.addTrack(t4B);
-    rButton17.addTrack(rLoopA);
-    rButton17.addTrack(rLoopB);
-    rButton17.addTrack(t7A);
-    rButton17.addTrack(t1A);
-    rButton17.addTrack(loop1B);
-    rButton17.addTrack(loop1C);
-    rButton17.addTrack(loop1D);
-    rButton17.addTrack(loop1E);
-    rButton17.addTrack(loop1F);
-    rButton17.addTrack(loop1G);
-    rButton17.addTrack(loop1H);
-    rButton17.addTrack(loop1I);
-    rButton17.addTrack(t50A1);
-    rButton17.addTrack(t40A1);
-    rButton17.addTrack(loop1A2A);
-    rButton17.addTrack(t30B4);
-    rButton17.addTrack(t30B1);
-    rButton17.addTrack(loop3A);
-    rButton17.addTrack(loop3B);
-    rButton17.addTrack(loop3C);
-    rButton17.addTrack(t20A2);
-    rButton17.addTrack(loop2A3A);
-    rButton17.addTrack(t5A);
-    rButton17.addTrack(bridgeA);
-    rButton17.addTrack(bridgeB);
-    rButton17.addTrack(bridgeC);
-    rButton17.addTrack(bridgeD);
-    rButton17.addTrack(bridgeE);
-    rButton17.addTrack(bridgeF);
-    rButton17.addTrack(bridgeG);
-    rButton17.addTrack(bridgeH);
-    rButton17.addTrack(bridgeI);
-
-    rButtonSpiral = new RouteButton(rX+100,rY+120,80,40,"Spiral");
-    rButtonSpiral.addTrackButton(tButton4,1);
-    rButtonSpiral.addTrackButton(tButton5,0);
-    rButtonSpiral.addTrackButton(tButton7,0);
-    rButtonSpiral.addTrackButton(tButton1,0);
-    rButtonSpiral.addTrackButton(tButton10,0);
-    rButtonSpiral.addTrackButton(tButton20,0);
-    rButtonSpiral.addTrackButton(tButton30,0);
-    rButtonSpiral.addTrackButton(tButton40,0);
-    rButtonSpiral.addTrackButton(tButton50,0);    
-    rButtonSpiral.addTrack(t4B);
-    rButtonSpiral.addTrack(rLoopA);
-    rButtonSpiral.addTrack(rLoopB);
-    rButtonSpiral.addTrack(t7A);
-    rButtonSpiral.addTrack(t1A);
-    rButtonSpiral.addTrack(loop1B);
-    rButtonSpiral.addTrack(loop1C);
-    rButtonSpiral.addTrack(loop1D);
-    rButtonSpiral.addTrack(loop1E);
-    rButtonSpiral.addTrack(loop1F);
-    rButtonSpiral.addTrack(loop1G);
-    rButtonSpiral.addTrack(loop1H);
-    rButtonSpiral.addTrack(loop1I);
-    rButtonSpiral.addTrack(t50A1);
-    rButtonSpiral.addTrack(t40A1);
-    rButtonSpiral.addTrack(loop1A2A);
-    rButtonSpiral.addTrack(t30A4);
-    rButtonSpiral.addTrack(t30A3);
-    rButtonSpiral.addTrack(t50A2);
-    rButtonSpiral.addTrack(loop2A);
-    rButtonSpiral.addTrack(loop2B);
-    rButtonSpiral.addTrack(loop2C);
-    rButtonSpiral.addTrack(loop2D);
-    rButtonSpiral.addTrack(loop2E);
-    rButtonSpiral.addTrack(loop2F);
-    rButtonSpiral.addTrack(loop2G);
-    rButtonSpiral.addTrack(loop2H);
-    rButtonSpiral.addTrack(t10A3);
-    rButtonSpiral.addTrack(t10A4);
-    rButtonSpiral.addTrack(t30A1);
-    rButtonSpiral.addTrack(t30A2);
-    rButtonSpiral.addTrack(loop2A3A);
-    rButtonSpiral.addTrack(t20A2);
-    rButtonSpiral.addTrack(loop3A);
-    rButtonSpiral.addTrack(loop3B);
-    rButtonSpiral.addTrack(loop3C);
-    rButtonSpiral.addTrack(t5A);
-    rButtonSpiral.addTrack(bridgeA);
-    rButtonSpiral.addTrack(bridgeB);
-    rButtonSpiral.addTrack(bridgeC);
-    rButtonSpiral.addTrack(bridgeD);
-    rButtonSpiral.addTrack(bridgeE);
-    rButtonSpiral.addTrack(bridgeF);
-    rButtonSpiral.addTrack(bridgeG);
-    rButtonSpiral.addTrack(bridgeH);
-    rButtonSpiral.addTrack(bridgeI);
-
-    rButtonReset = new RouteButton(rX+400,rY+120,80,40,"RESET");
-    rButtonReset.addTrackButton(tButton40,0);
-    rButtonReset.addTrackButton(tButton3,0);
-    rButtonReset.addTrackButton(tButton2,0);
-    rButtonReset.addTrackButton(tButton8,0);
-    rButtonReset.addTrackButton(tButton10,0);
-    rButtonReset.addTrackButton(tButton20,0);
-    rButtonReset.addTrackButton(tButton9,0);
-    rButtonReset.addTrackButton(tButton4,0);
-    rButtonReset.addTrackButton(tButton1,0);
-    rButtonReset.addTrackButton(tButton5,0);
-    rButtonReset.addTrackButton(tButton50,0);
-    rButtonReset.addTrackButton(tButton6,0);
-    rButtonReset.addTrackButton(tButton7,0);
-    rButtonReset.addTrackButton(tButton30,0);
-    rButtonReset.addTrack(t1A);
-    rButtonReset.addTrack(t2A);
-    rButtonReset.addTrack(t3A);
-    rButtonReset.addTrack(t4A);
-    rButtonReset.addTrack(t5A);
-    rButtonReset.addTrack(t6A);
-    rButtonReset.addTrack(t7A);
-    rButtonReset.addTrack(t8A);
-    rButtonReset.addTrack(t9A);
-    rButtonReset.addTrack(t10A1);
-    rButtonReset.addTrack(t10A2);
-    rButtonReset.addTrack(t10A3);
-    rButtonReset.addTrack(t10A4);
-    rButtonReset.addTrack(t20A1);
-    rButtonReset.addTrack(t20A2);
-    rButtonReset.addTrack(t30A1);
-    rButtonReset.addTrack(t30A2);
-    rButtonReset.addTrack(t30A3);
-    rButtonReset.addTrack(t30A4);
-    rButtonReset.addTrack(t40A1);
-    rButtonReset.addTrack(t40A2);
-    rButtonReset.addTrack(t50A1);
-    rButtonReset.addTrack(t50A2);
-    
-    rButtonBridge = new RouteButton(bridgeA,20,20);
-    rButtonBridge.addTrackButton(tButton5,0);
-    rButtonBridge.addTrackButton(tButton8,0);
-    rButtonBridge.addTrack(t5A);
-    rButtonBridge.addTrack(bridgeA);
-    rButtonBridge.addTrack(bridgeB);
-    rButtonBridge.addTrack(bridgeC);
-    rButtonBridge.addTrack(bridgeD);
-    rButtonBridge.addTrack(bridgeE);
-    rButtonBridge.addTrack(bridgeF);
-    rButtonBridge.addTrack(bridgeG);
-    rButtonBridge.addTrack(bridgeH);
-    rButtonBridge.addTrack(bridgeI);
-    rButtonBridge.addTrack(t8A);    
-    
-    cab622.setSidingDefaults(rButton6,4,10);      // must set default sidings AFTER rButtons are defined above
-    cab6021.setSidingDefaults(rButton1,11,7);
-    cab54.setSidingDefaults(rButton2,11,8);
-    cab1506.setSidingDefaults(rButton3,11,9);
-    cab8601.setSidingDefaults(rButton4,11,12);
-    cab1202.setSidingDefaults(rButton5,11,13);
-    cab2004.setSidingDefaults(rButton7,5,14);
     
   } // Initialize
 
+  // Bottom loop starts at the townExit point and loops around
+  // in a tunnel on the base level to the stationExit point.
+  Track defineBottomLoop(Track entryPoint) {
+    Track t0 = new Track(entryPoint, 1, 360);        // 5106 x2
+    Track t1 = new Track(t0, 1, 360, -30);           // 5100
+    Track t2 = new Track(t1, 1, 360, 30);            // 5100
+    Track t3 = new Track(t2, 1, 630);                // 5107, 5106 x3
+    Track t4 = new Track(t3, 1, 360, 30);            // 5100
+    Track t5 = new Track(t4, 1, 360, -90);           // 5100 x 3
+    Track t6 = new Track(t5, 1, 900);                // 5106 x 5
+    Track t7 = new Track(t6, 1, 360, -30);           // 5100    
+    Track t8 = new Track(t7, 1, 180);                // 5106
+    Track t9 = new Track(t8, 1, 360, -30);           // 5100
+    
+    Track blRearPoint = new Track(t9, 1, 180);       // 5117R
+    Track blRearPointT = new Track(t9, 1, 360, -30);
+    
+    Track a1 = new Track(blRearPointT, 1, 180);       // 5106
+    Track a2 = new Track(a1, 1, 360, -30);           // 5100
+    Track a3 = new Track(a2, 1, 225);                // 5108, 5106
+    Track a4 = new Track(a3, 1, 360, -60);           // 5100 x 2
+    Track a5 = new Track(a4, 1, 360);                // 5106 x 2
+    Track a6 = new Track(a5, 1, 360, 30);            // 5100
+    Track a7 = new Track(a6, 1, 33);                 // 5109
+    
+    Track b1 = new Track(blRearPoint, 1, 360, -60);  // 5100 x2
+    Track b2 = new Track(b1, 1, 360);                // 5106 x2
+    Track b3 = new Track(b2, 1, 360, -60);           // 5100 x2
+    Track b4 = new Track(b3, 1, 573);                // 5106 x3, 5109
+    
+    Track blFrontPoint = new Track(a7, 1, 180);      // 5117R
+    Track blFrontPointT = new Track(b4, 1, 360, 30); 
+    
+    Track tA = new Track(blFrontPoint, 1, 360, 15);  // 5101
+    Track tB = new Track(tA, 1, 66);                 // 5109 x 2
+    Track tC = new Track(tB, 1, 360, 15);            // 5101
+    
+    Track frontHillPoint = new Track(tC, 1, 180);    // 5117R
+    
+    return frontHillPoint;
+  }
+    
+  Track defineTown(Track entryPoint) {
+    Track curveExit = new Track(entryPoint, 1, 360);     // 5106 x 2
+    Track town1 = new Track(curveExit, 1, 360, -30);     // 5100, 5117 on plan
+    Track town2 = new Track(town1, 1, 180);              // 5106
+    Track town3 = new Track(town2, 1, 360, -30);         // 5100
+    Track town4 = new Track(town3, 1, 360, 30);          // 5100
+    Track townExitPoint = new Track(town4, 1, 180);      // 5117L
+    Track townExitPointT = new Track(town4, 1, 360, 30);    
+    return townExitPoint;
+  }
+    
+  Track defineStation(Track entryPoint) {
+    Track stationEntry = new Track(entryPoint, 1, 180);                   // 5106
+    Track stationEntryPoint = new Track(stationEntry, 1, 180);            // 5117R
+    Track stationEntryPointT = new Track(stationEntry, 1, 360, -30);
+    Track sidingEntryPoint = new Track(stationEntryPoint, 1, 180);        // 5117L
+    Track sidingEntryPointT = new Track(stationEntryPoint, 1, 360, 30);
+    
+    Track platform2 = new Track(sidingEntryPoint, 1, 900);                // 5106 x 5
+    Track plat1entry = new Track(stationEntryPointT, 1, 360, 30);         // 5100
+    Track platform1 = new Track(plat1entry, 1, 720);                      // 5106 x 4
+    Track plat1exit = new Track(platform1, 1, 360, 30);                   // 5100
+    
+    Track stationExitPoint = new Track(platform2, 1, 180);                // 5117L
+    Track stationExitPointT = new Track(plat1exit, 1, 360, -30);
+    
+    return stationExitPoint;
+  }
+  
+ /* Track defineStation(Track entryPoint) {
+    
+     
+      Track t4 = new Track(t3, 1, 360, 30);            // 5100
+    Track t5 = new Track(t4, 1, 360, -90);           // 5100 x 3
+    Track t6 = new Track(t5, 1, 900);                // 5106 x 5
+    Track t7 = new Track(t6, 1, 360, -30);           // 5100    
+    
+  }*/
 //////////////////////////////////////////////////////////////////////////
