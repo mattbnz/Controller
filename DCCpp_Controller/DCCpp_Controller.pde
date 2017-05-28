@@ -83,6 +83,7 @@ import processing.net.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.*;
+import ddf.minim.*;
 
 final String   CONTROLLER_VERSION  = "3.0";
 final int      BASE_BAUD       =    115200;

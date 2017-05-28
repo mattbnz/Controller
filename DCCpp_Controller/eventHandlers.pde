@@ -172,6 +172,12 @@ void clientEvent(Client c){
         } else if(c.equals("sf")){
           msgBoxMain.setMessage("Motor Shield Fault (current overload?) - Power Off",color(200,30,30));
           powerButton.isOn=false;
+          klaxonSound.rewind();
+          klaxonSound.play();
+        } else if(c.equals("sw")){
+          msgBoxMain.setMessage("Motor Shield Fault - Automatically reset",color(30, 30, 150));
+          warningSound.rewind();
+          warningSound.play();
         }
         break;
 

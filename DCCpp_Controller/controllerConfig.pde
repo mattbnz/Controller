@@ -59,6 +59,10 @@
   PortScanButton    portScanButton;
   LEDColorButton    ledColorButton;
   
+  Minim              minim;
+  AudioPlayer        klaxonSound;
+  AudioPlayer        warningSound;
+
 // DECLARE TRACK BUTTONS, ROUTE BUTTONS, and CAB BUTTONS WHICH WILL BE DEFINED BELOW AND USED "GLOBALLY"  
 
   TrackButton      tButton1,tButton2,tButton3,tButton4,tButton5;
@@ -121,7 +125,11 @@
     }
     
     saveXMLFlag=true;
-      
+
+    minim = new Minim(this);
+    klaxonSound = minim.loadFile("klaxon.wav");
+    warningSound = minim.loadFile("warning.wav");
+
 // CREATE THE ACCESSORY CONTROL WINDOW
     
     accWindow = new Window(500,200,300,160,color(200,200,200),color(200,50,50));
