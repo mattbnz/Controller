@@ -379,107 +379,91 @@
     cleaningCab=new CleaningCarButton(extrasWindow,28,80,80,120,50,40,16,"Cleaning\nCar");        
       
 // CREATE MAIN LAYOUT AND DEFINE ALL TRACKS
+
+// Begin Cloverly 2017 Layout. 
     colorMode(RGB, 255);
     Layout baseLayout = new Layout(325,50,width-325,4180, 3100); // x in px, y in px, width in px, width in mm, height in mm
     
+    // Small dots to visually help define the layout bounds in the display.
     Track topLeft = new Track(baseLayout, 0, 0, 10, 0);
     Track topRight = new Track(baseLayout, 4170, 0, 10, 0);
     Track bottomLeft = new Track(baseLayout, 0, 3050, 10, 0);
     Track bottomRight = new Track(baseLayout, 4170, 3050, 10, 0);
     
-    // The 90mm straight in the middle of the curve at the very
+    // The 180mm straight in the middle of the outer track curve at the
     // left hand end of the table serves as our anchor for the
     // rest of the base loop.
-    Track leftAnchor = new Track(baseLayout, 184, 569, 90, 270); // 1 x 5107
+    Track outerLeftAnchor = new Track(baseLayout, 206, 517, 180, 270); // 1 x 5106
+    // The parallel 45mm+90mm straight in the inner track serves a similar purpose.
+    Track innerLeftAnchor = new Track(baseLayout, 279, 540, 45+90, 270);  // 1 x 5108 + 5107
     
-    Track leftLowerCurve = new Track(leftAnchor, 1, 360, 90); // 3 x 5100
-    Track leftUpperCurve = new Track(leftAnchor, 0, 360, -60); // 2 x 5100
+    // Remainder of the outer curve
+    Track outerCurveBack = new Track(outerLeftAnchor, 0, 360, -90); // 3 x 5100
+    Track outerCurveFront = new Track(outerLeftAnchor, 1, 360, 90); // 3 x 5100
+    Track outerCurveToStation = new Track(outerCurveFront, 1, 33+22); // 5109, 5110
     
-    Track stationExit = defineStation(leftLowerCurve);
-    Track townExit = defineTown(leftUpperCurve);
-    Track bottomLoop = defineBottomLoop(townExit);
+    // Remainder of the inner curve
+    Track innerCurveBack = new Track(innerLeftAnchor, 0, 286, -90); // 2 x 5120
+    Track innerCurveFront = new Track(innerLeftAnchor, 1, 286, 90); // 2 x 5120
+    Track innerCurveToStation = new Track(innerCurveFront, 1, 70); // 5129
     
+    Track[] stationExits = defineStation(outerCurveToStation, innerCurveToStation);
+    Track stationToInnerTunnel = stationExits[0];
+    Track stationToOuterHill = stationExits[1];
+
     
   } // Initialize
+    
+  Track[] defineStation(Track outerEntry, Track innerEntry) {
+    // Draw the station, left to right, starting with the entry points from the
+    // inner & outer tracks.
+    Track outerLeftPoint = new Track(outerEntry, 1, 180);            // 5117R
+    Track outerLeftPointT = new Track(outerEntry, 1, 360, -30);
+    Track innerLeftPoint = new Track(innerEntry, 1, 180);           // 5117R
+    Track innerLeftPointT = new Track(innerEntry, 1, 360, -30);
+    
+    // Next the points/lead-in to the individual platforms, draw in order of
+    // the inner track (plat 3) through to the front track (plat 1) so references
+    // to the preceeding turnouts are available.
+    Track plat3LeftPoint = new Track(innerLeftPoint, 1, 180);              // 5117R
+    Track plat3LeftPointT = new Track(innerLeftPoint, 1, 360, -30);
+    
+    Track leftXover = new Track(outerLeftPoint, 1, 180);                   // 5114
+    Track leftXoverD = new Track(innerLeftPointT, 1, 180);
+    Track plat2LeftPoint = new Track(leftXover, 1, 180);                   // 5117R
+    Track plat2LeftPointT = new Track(plat3LeftPointT, 1, 360, 30);
+    
+    Track plat1LeftCurve = new Track(outerLeftPointT, 1, 360, 30);         // 5100
+    Track plat1LeftPoint = new Track(plat1LeftCurve, 1, 180);              // 5117R
+    Track plat1LeftPointT = new Track(leftXoverD, 1, 360, 30);
+    
+    // Now the platform straights.
+    Track plat3 = new Track(plat3LeftPoint, 1, (180*5) + 45);              // 5106 x 5, 5108 //<>//
+    Track plat2 = new Track(plat2LeftPoint, 1, 45 + (180*3));              // 5108, 5106 x 3
+    Track plat1 = new Track(plat1LeftPoint, 1, (33*2) + (180*3));          // 5109 x2, 5106 x 3
+    
+    // Now the right-hand side points, in reverse order to above. If you look at
+    // a diagram of the track, you'll see why the ordering to have the preceeding
+    // track piece references available makes sense.
+    Track plat1RightPoint = new Track(plat1, 1, 180);                      // 5117L
+    Track plat1RightPointT = new Track(plat1, 1, 360, 30);
+    Track plat1RightCurve = new Track(plat1RightPoint, 1, 360, 30);        // 5100
+    
+    Track plat2RightPoint = new Track(plat2, 1, 180);                      // 5117L
+    Track plat2RightPointT = new Track(plat2, 1, 360, 30);
+    Track rightXover = new Track(plat2RightPoint, 1, 180);                 // 5114
+    Track rightXoverD = new Track(plat1RightPointT, 1, 180);
+    
+    Track plat3RightPoint = new Track(plat3, 1, 180);                      // 5117L
+    Track plat3RightPointT = new Track(plat2RightPointT, 1, 360, -30);
+    
+    // Finally the points back onto the inner/outer tracks.
+    Track r[] = new Track[2];
+    r[0] = new Track(plat3RightPoint, 1, 180);                             // 5117L
+    Track innerRightPointT = new Track(rightXoverD, 1, 360, -30);
+    r[1] = new Track(rightXover, 1, 180);                                  // 5117L
+    Track outerRightPointT = new Track(plat1RightCurve, 1, 360, -30);
+    return r;
+  }
 
-  // Bottom loop starts at the townExit point and loops around
-  // in a tunnel on the base level to the stationExit point.
-  Track defineBottomLoop(Track entryPoint) {
-    Track t0 = new Track(entryPoint, 1, 360);        // 5106 x2
-    Track t1 = new Track(t0, 1, 360, -30);           // 5100
-    Track t2 = new Track(t1, 1, 360, 30);            // 5100
-    Track t3 = new Track(t2, 1, 630);                // 5107, 5106 x3
-    Track t4 = new Track(t3, 1, 360, 30);            // 5100
-    Track t5 = new Track(t4, 1, 360, -90);           // 5100 x 3
-    Track t6 = new Track(t5, 1, 900);                // 5106 x 5
-    Track t7 = new Track(t6, 1, 360, -30);           // 5100    
-    Track t8 = new Track(t7, 1, 180);                // 5106
-    Track t9 = new Track(t8, 1, 360, -30);           // 5100
-    
-    Track blRearPoint = new Track(t9, 1, 180);       // 5117R
-    Track blRearPointT = new Track(t9, 1, 360, -30);
-    
-    Track a1 = new Track(blRearPointT, 1, 180);       // 5106
-    Track a2 = new Track(a1, 1, 360, -30);           // 5100
-    Track a3 = new Track(a2, 1, 225);                // 5108, 5106
-    Track a4 = new Track(a3, 1, 360, -60);           // 5100 x 2
-    Track a5 = new Track(a4, 1, 360);                // 5106 x 2
-    Track a6 = new Track(a5, 1, 360, 30);            // 5100
-    Track a7 = new Track(a6, 1, 33);                 // 5109
-    
-    Track b1 = new Track(blRearPoint, 1, 360, -60);  // 5100 x2
-    Track b2 = new Track(b1, 1, 360);                // 5106 x2
-    Track b3 = new Track(b2, 1, 360, -60);           // 5100 x2
-    Track b4 = new Track(b3, 1, 573);                // 5106 x3, 5109
-    
-    Track blFrontPoint = new Track(a7, 1, 180);      // 5117R
-    Track blFrontPointT = new Track(b4, 1, 360, 30); 
-    
-    Track tA = new Track(blFrontPoint, 1, 360, 15);  // 5101
-    Track tB = new Track(tA, 1, 66);                 // 5109 x 2
-    Track tC = new Track(tB, 1, 360, 15);            // 5101
-    
-    Track frontHillPoint = new Track(tC, 1, 180);    // 5117R
-    
-    return frontHillPoint;
-  }
-    
-  Track defineTown(Track entryPoint) {
-    Track curveExit = new Track(entryPoint, 1, 360);     // 5106 x 2
-    Track town1 = new Track(curveExit, 1, 360, -30);     // 5100, 5117 on plan
-    Track town2 = new Track(town1, 1, 180);              // 5106
-    Track town3 = new Track(town2, 1, 360, -30);         // 5100
-    Track town4 = new Track(town3, 1, 360, 30);          // 5100
-    Track townExitPoint = new Track(town4, 1, 180);      // 5117L
-    Track townExitPointT = new Track(town4, 1, 360, 30);    
-    return townExitPoint;
-  }
-    
-  Track defineStation(Track entryPoint) {
-    Track stationEntry = new Track(entryPoint, 1, 180);                   // 5106
-    Track stationEntryPoint = new Track(stationEntry, 1, 180);            // 5117R
-    Track stationEntryPointT = new Track(stationEntry, 1, 360, -30);
-    Track sidingEntryPoint = new Track(stationEntryPoint, 1, 180);        // 5117L
-    Track sidingEntryPointT = new Track(stationEntryPoint, 1, 360, 30);
-    
-    Track platform2 = new Track(sidingEntryPoint, 1, 900);                // 5106 x 5
-    Track plat1entry = new Track(stationEntryPointT, 1, 360, 30);         // 5100
-    Track platform1 = new Track(plat1entry, 1, 720);                      // 5106 x 4
-    Track plat1exit = new Track(platform1, 1, 360, 30);                   // 5100
-    
-    Track stationExitPoint = new Track(platform2, 1, 180);                // 5117L
-    Track stationExitPointT = new Track(plat1exit, 1, 360, -30);
-    
-    return stationExitPoint;
-  }
-  
- /* Track defineStation(Track entryPoint) {
-    
-     
-      Track t4 = new Track(t3, 1, 360, 30);            // 5100
-    Track t5 = new Track(t4, 1, 360, -90);           // 5100 x 3
-    Track t6 = new Track(t5, 1, 900);                // 5106 x 5
-    Track t7 = new Track(t6, 1, 360, -30);           // 5100    
-    
-  }*/
 //////////////////////////////////////////////////////////////////////////
