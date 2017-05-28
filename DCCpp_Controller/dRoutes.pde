@@ -28,8 +28,8 @@ class RouteButton extends DccComponent{
   ArrayList<Track> rTracks = new ArrayList<Track>();
   
   RouteButton(Track refTrack, int kWidth, int kHeight){
-    this.xPos=int((refTrack.x[0]+refTrack.x[1])/2.0*refTrack.layout.sFactor+refTrack.layout.xCorner);
-    this.yPos=int((refTrack.y[0]+refTrack.y[1])/2.0*refTrack.layout.sFactor+refTrack.layout.yCorner);
+    this.xPos=int(refTrack.layout.toX(refTrack.x[0]+refTrack.x[1])/2.0);
+    this.yPos=int(refTrack.layout.toY(refTrack.y[0]+refTrack.y[1])/2.0);
     this.kWidth=kWidth;
     this.kHeight=kHeight;
     dccComponents.add(this);

@@ -67,8 +67,8 @@ class TrackButton extends DccComponent{
 
   void addTrack(Track track, int tPos){
     int n=aTracks.size()+bTracks.size();
-    this.xPos=int((this.xPos*n+(track.x[0]+track.x[1])/2.0*track.layout.sFactor+track.layout.xCorner)/(n+1.0));
-    this.yPos=int((this.yPos*n+(track.y[0]+track.y[1])/2.0*track.layout.sFactor+track.layout.yCorner)/(n+1.0));
+    this.xPos=int(track.layout.toX(this.xPos*n+(track.x[0]+track.x[1])/2.0)/(n+1.0));
+    this.yPos=int(track.layout.toY(this.yPos*n+(track.y[0]+track.y[1])/2.0)/(n+1.0));
     
     if(tPos==0){                       // specifies that this track should be considered part of aTracks
       track.tStatus=1-buttonStatus;

@@ -722,8 +722,8 @@ class TrackSensor extends Track{
     super(refTrack,trackPoint,tLength);
     this.kWidth=kWidth;
     this.kHeight=kHeight;
-    this.xPos=int(x[1]*layout.sFactor+layout.xCorner);
-    this.yPos=int(y[1]*layout.sFactor+layout.yCorner);   
+    this.xPos=int(layout.toX(x[1]));
+    this.yPos=int(layout.toY(y[1]));
     this.sensorNum=sensorNum;
     sensorName="Sensor"+sensorNum;
     componentName=sensorName;
@@ -743,8 +743,8 @@ class TrackSensor extends Track{
     super(refTrack,trackPoint,curveRadius,curveAngleDeg);
     this.kWidth=kWidth;
     this.kHeight=kHeight;
-    this.xPos=int(x[1]*layout.sFactor+layout.xCorner);
-    this.yPos=int(y[1]*layout.sFactor+layout.yCorner);    
+    this.xPos=int(layout.toX(x[1]));
+    this.yPos=int(layout.toY(y[1]));
     this.sensorNum=sensorNum;
     this.sensorDefault=sensorDefault;
     sensorName="Sensor"+sensorNum;
