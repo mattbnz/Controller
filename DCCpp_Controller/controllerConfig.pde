@@ -440,13 +440,51 @@
     Track innerCurveFront = new Track(innerLeftAnchor, 1, 286, 90); // 2 x 5120
     Track innerCurveToStation = new Track(innerCurveFront, 1, 70); // 5129
     
+    // Inner curve/base layer features
     Station station = new Station(outerCurveToStation, innerCurveToStation);
     StationSidings sidings = new StationSidings(innerCurveBack);
     Town town = new Town(sidings.rightEntry.straight, station.innerRight.straight);
     MountainSidings ms = new MountainSidings(town.msLeft.straight, town.msRight.straight);
     FrontFeature feature = new FrontFeature(ms.toFeature.divergent);
+    
+    // Outer curve/mountain spiral
+    SpiralClimb spiral = new SpiralClimb(outerCurveBack);
+    MountainDescent descent = new MountainDescent(spiral.top);
+    
   }
   
+  class MountainDescent {
+    Track c1, c2, c3;
+    Track d1, d2, d3;
+    
+    MountainDescent(Track top) {
+      c1 = new Track(top, 1, 360, -30);
+      d1 = new Track(c1, 1, 180*7);
+      c2 = new Track(d1, 1, 360, -30*6);
+      d2 = new Track(c2, 1, (180*4)+90);
+      c3 = new Track(d2, 1, 360, 30*3);
+      d3 = new Track(c3, 1, 33+(180*3)+33+22);
+    }
+  }
+  
+  class SpiralClimb {
+    Track t1, t2;
+    Track hillClimb;
+    Track s1, s2, s3, s4, s5, top;
+    
+    SpiralClimb(Track entry) {
+       t1 = new Track(entry, 1, 360, 30);
+       t2 = new Track(t1, 1, 360, -30);
+       hillClimb = new Track(t2, 1, 180*10);
+       s1 = new Track(hillClimb, 1, 360, -30);
+       s2 = new Track(s1, 1, 180*6);
+       s3 = new Track(s2, 1, 360, -30*7);
+       s4 = new Track(s3, 1, 180*3);
+       s5 = new Track(s4, 1, 360, -30*6);
+       top = new Track(s5, 1, 180*3);
+    }
+  }
+
   class FrontFeature {
     Track f1, f2, f3, f4;
     
@@ -484,7 +522,7 @@
     Turnout entry, exit;
     Turnout t12t34;
     Turnout toFeature;
-    Turnout t1t2, t3t4, t5t6; //<>// //<>//
+    Turnout t1t2, t3t4, t5t6;
     Track t1C, t1, t2, t3C, t3, t4, t5, t6C, t6;
     Track toBack, toFront, eeLink, tfC1, tfC2;
     
@@ -496,7 +534,7 @@
       
       exit = new5117R(toBack, 30, tfC2);
       eeLink = new Track(exit.straight, 1, 90);
-      entry = new5117R(eeLink, 31, null); //<>// //<>//
+      entry = new5117R(eeLink, 31, null);
       t12t34 = new5117L(entry.divergent, 32, null);
       t5t6 = new5117L(entry.straight, 33, null);
       toFeature = new5117R(t12t34.straight, 34, null);
