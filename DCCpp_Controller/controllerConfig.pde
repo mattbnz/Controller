@@ -382,6 +382,39 @@
 
 // Begin Cloverly 2017 Layout. 
     colorMode(RGB, 255);
+    Cloverly2017();
+  } // Initialize
+    
+  class Turnout {
+    Track straight;
+    Track divergent;
+    TrackButton button;
+    
+    // Constructor:
+    // - prior: Previous track segment to link to.
+    // - slength: Length of straight.
+    // - radious: Radius of divergent track.
+    // - arc: Arc length of divergent track.
+    // - id: The accessory ID for the button.
+    // - dprior: Previous track to link divergent track to. if null, use prior.    
+    Turnout(Track prior, int slength, int radius, int arc, int id, Track dprior) {
+      straight = new Track(prior, 1, slength);
+      divergent = new Track(dprior == null ? prior : dprior, 1, radius, arc);
+      button = new TrackButton(20, 20, id);
+      button.addTrack(straight, 0);
+      button.addTrack(divergent, 1);
+    }
+
+  }  
+     
+  Turnout new5117R(Track prior, int id, Track dprior) {
+    return new Turnout(prior, 180, 360, -30, id, dprior);
+  }
+  Turnout new5117L(Track prior, int id, Track dprior) {
+    return new Turnout(prior, 180, 360, 30, id, dprior);    
+  }  
+  
+  void Cloverly2017() {
     Layout baseLayout = new Layout(325,50,width-325,4180, 3100); // x in px, y in px, width in px, width in mm, height in mm
     
     // Small dots to visually help define the layout bounds in the display.
@@ -389,7 +422,7 @@
     Track topRight = new Track(baseLayout, 4170, 0, 10, 0);
     Track bottomLeft = new Track(baseLayout, 0, 3050, 10, 0);
     Track bottomRight = new Track(baseLayout, 4170, 3050, 10, 0);
-    
+
     // The 180mm straight in the middle of the outer track curve at the
     // left hand end of the table serves as our anchor for the
     // rest of the base loop.
@@ -407,63 +440,137 @@
     Track innerCurveFront = new Track(innerLeftAnchor, 1, 286, 90); // 2 x 5120
     Track innerCurveToStation = new Track(innerCurveFront, 1, 70); // 5129
     
-    Track[] stationExits = defineStation(outerCurveToStation, innerCurveToStation);
-    Track stationToInnerTunnel = stationExits[0];
-    Track stationToOuterHill = stationExits[1];
+    Station station = new Station(outerCurveToStation, innerCurveToStation);
+    StationSidings sidings = new StationSidings(innerCurveBack);
+    Town town = new Town(sidings.rightEntry.straight, station.innerRight.straight);
+    MountainSidings ms = new MountainSidings(town.msLeft.straight, town.msRight.straight);
+    FrontFeature feature = new FrontFeature(ms.toFeature.divergent);
+  }
+  
+  class FrontFeature {
+    Track f1, f2, f3, f4;
+    
+    FrontFeature(Track prior) {
+      f1 = new Track(prior, 1, 360, -30*2);
+      f2 = new Track(f1, 1, 360, 15);
+      f3 = new Track(f2, 1, 360, -30);
+      f4 = new Track(f3, 1, 180*5);
+    }
+  }
+  
+  class Town {
+    Track town, frontTunnel, ft1, ft2, ft3;
+    Track bs1, bs2, bs3, bs4, bs5; //below spiral.
+    Turnout msRight, msLeft; // mountain sidings turnouts.
 
-    
-  } // Initialize
-    
-  Track[] defineStation(Track outerEntry, Track innerEntry) {
-    // Draw the station, left to right, starting with the entry points from the
-    // inner & outer tracks.
-    Track outerLeftPoint = new Track(outerEntry, 1, 180);            // 5117R
-    Track outerLeftPointT = new Track(outerEntry, 1, 360, -30);
-    Track innerLeftPoint = new Track(innerEntry, 1, 180);           // 5117R
-    Track innerLeftPointT = new Track(innerEntry, 1, 360, -30);
-    
-    // Next the points/lead-in to the individual platforms, draw in order of
-    // the inner track (plat 3) through to the front track (plat 1) so references
-    // to the preceeding turnouts are available.
-    Track plat3LeftPoint = new Track(innerLeftPoint, 1, 180);              // 5117R
-    Track plat3LeftPointT = new Track(innerLeftPoint, 1, 360, -30);
-    
-    Track leftXover = new Track(outerLeftPoint, 1, 180);                   // 5114
-    Track leftXoverD = new Track(innerLeftPointT, 1, 180);
-    Track plat2LeftPoint = new Track(leftXover, 1, 180);                   // 5117R
-    Track plat2LeftPointT = new Track(plat3LeftPointT, 1, 360, 30);
-    
-    Track plat1LeftCurve = new Track(outerLeftPointT, 1, 360, 30);         // 5100
-    Track plat1LeftPoint = new Track(plat1LeftCurve, 1, 180);              // 5117R
-    Track plat1LeftPointT = new Track(leftXoverD, 1, 360, 30);
-    
-    // Now the platform straights.
-    Track plat3 = new Track(plat3LeftPoint, 1, (180*5) + 45);              // 5106 x 5, 5108 //<>//
-    Track plat2 = new Track(plat2LeftPoint, 1, 45 + (180*3));              // 5108, 5106 x 3
-    Track plat1 = new Track(plat1LeftPoint, 1, (33*2) + (180*3));          // 5109 x2, 5106 x 3
-    
-    // Now the right-hand side points, in reverse order to above. If you look at
-    // a diagram of the track, you'll see why the ordering to have the preceeding
-    // track piece references available makes sense.
-    Track plat1RightPoint = new Track(plat1, 1, 180);                      // 5117L
-    Track plat1RightPointT = new Track(plat1, 1, 360, 30);
-    Track plat1RightCurve = new Track(plat1RightPoint, 1, 360, 30);        // 5100
-    
-    Track plat2RightPoint = new Track(plat2, 1, 180);                      // 5117L
-    Track plat2RightPointT = new Track(plat2, 1, 360, 30);
-    Track rightXover = new Track(plat2RightPoint, 1, 180);                 // 5114
-    Track rightXoverD = new Track(plat1RightPointT, 1, 180);
-    
-    Track plat3RightPoint = new Track(plat3, 1, 180);                      // 5117L
-    Track plat3RightPointT = new Track(plat2RightPointT, 1, 360, -30);
-    
-    // Finally the points back onto the inner/outer tracks.
-    Track r[] = new Track[2];
-    r[0] = new Track(plat3RightPoint, 1, 180);                             // 5117L
-    Track innerRightPointT = new Track(rightXoverD, 1, 360, -30);
-    r[1] = new Track(rightXover, 1, 180);                                  // 5117L
-    Track outerRightPointT = new Track(plat1RightCurve, 1, 360, -30);
-    return r;
+    Town(Track backEntry, Track frontEntry ) {
+      town = new Track(backEntry, 1, 180*11);
+      bs1 = new Track(town, 1, 360, -30);
+      bs2 = new Track(bs1, 1, 360, 30);
+      bs3 = new Track(bs2, 1, 360, -30);
+      bs4 = new Track(bs3, 1, 360, 30);
+      bs5 = new Track(bs4, 1, 360, -30*3);
+      msRight = new5117R(bs5, 15, null);
+
+      frontTunnel = new Track(frontEntry, 1, (180*4) + 70 + 22);
+      ft1 = new Track(frontTunnel, 1, 360, -30);
+      ft2 = new Track(ft1, 1, 180);
+      msLeft = new5117L(ft2, 14, null);
+      ft3 = new Track(msLeft.divergent, 1, 360, 30*2);
+    }
   }
 
+  class MountainSidings {
+    Turnout entry, exit;
+    Turnout t12t34;
+    Turnout toFeature;
+    Turnout t1t2, t3t4, t5t6; //<>//
+    Track t1C, t1, t2, t3C, t3, t4, t5, t6C, t6;
+    Track toBack, toFront, eeLink, tfC1, tfC2;
+    
+    MountainSidings(Track frontPoint, Track rearPoint) {
+      toBack = new Track(rearPoint, 1, (180*2) + 90);
+      tfC1 = new Track(frontPoint, 1, 360, 7.5);
+      toFront = new Track(tfC1, 1, 90+45);
+      tfC2 = new Track(toFront, 1, 360, -1*(30+7.5));
+      
+      exit = new5117R(toBack, 30, tfC2);
+      eeLink = new Track(exit.straight, 1, 90);
+      entry = new5117R(eeLink, 31, null); //<>//
+      t12t34 = new5117L(entry.divergent, 32, null);
+      t5t6 = new5117L(entry.straight, 33, null);
+      toFeature = new5117R(t12t34.straight, 34, null);
+      t3t4 = new5117R(t12t34.divergent, 35, null);
+      t1t2 = new5117L(toFeature.straight, 36, null);
+      
+      t1C = new Track(t1t2.straight, 1, 360, 30);
+      t1 = new Track(t1C, 1, 180*3);
+      t2 = new Track(t1t2.divergent, 1, 180*4);
+      t3C = new Track(t3t4.divergent, 1, 360, 30);
+      t3 = new Track(t3C, 1, 180*3);
+      t4 = new Track(t3t4.straight, 1, 180*4);
+      t5 = new Track(t5t6.straight, 1, 180*5);
+      t6C = new Track(t5t6.divergent, 1, 360, -30);
+      t6 = new Track(t6C, 1, 180*4);
+    }
+  }
+  
+  class StationSidings {
+    Turnout leftEntry, rightEntry, t1t2;
+    Track t1Curve, t1, t2, t3;
+    
+    StationSidings(Track entry) {
+      leftEntry = new5117R(entry, 11, null);
+      rightEntry = new5117R(leftEntry.straight, 12, null);
+      t1t2 = new5117R(leftEntry.divergent, 13, null);
+      t1Curve = new Track(t1t2.divergent, 1, 360, 30);
+      t1 = new Track(t1Curve, 1, 180 * 2);  
+      t2 = new Track(t1t2.straight, 1, 180*4);
+      t3 = new Track(rightEntry.divergent, 1, 180*5);
+    }
+  }
+
+  class Station {
+    Turnout innerLeft, outerLeft, innerRight, outerRight;
+    Turnout p1Left, p1Right, p2Left, p2Right, p3Left, p3Right;
+    Track p1, p2, p3, p1LeftCurve, p1RightCurve;
+    Track xoverLeft, xoverLeftD, xoverRight, xoverRightD;
+    
+    Station(Track outerEntry, Track innerEntry) {
+      // Draw the station, left to right, starting with the entry points from the
+      // inner & outer tracks.
+      innerLeft = new5117R(innerEntry,  1, null);
+      outerLeft = new5117R(outerEntry, 2, null);
+      
+      // Next the points/lead-in to the individual platforms, draw in order of
+      // the inner track (plat 3) through to the front track (plat 1) so references
+      // to the preceeding turnouts are available.
+      p3Left = new5117R(innerLeft.straight, 3, null);       
+      xoverLeft = new Track(outerLeft.straight, 1, 180);                   // 5114
+      xoverLeftD = new Track(innerLeft.divergent, 1, 180);      
+      p2Left = new5117L(xoverLeft, 4, p3Left.divergent);
+      p1LeftCurve = new Track(outerLeft.divergent, 1, 360, 30);
+      p1Left = new5117L(p1LeftCurve, 5, xoverLeftD);
+      
+      // Now the platform straights.
+      p3 = new Track(p3Left.straight, 1, (180*5) + 45);      // 5106 x 5, 5108
+      p2 = new Track(p2Left.straight, 1, 45 + (180*3));      // 5108, 5106 x 3
+      p1 = new Track(p1Left.straight, 1, (33*2) + (180*3));  // 5109 x2, 5106 x 3
+      
+      // Now the right-hand side points, in reverse order to above. If you look at
+      // a diagram of the track, you'll see why the ordering to have the preceeding
+      // track piece references available makes sense.
+      p1Right = new5117L(p1, 6, null);
+      p1RightCurve = new Track(p1Right.straight, 1, 360, 30);      
+      p2Right = new5117L(p2, 7, null);
+      xoverRight = new Track(p2Right.straight, 1, 180);                 // 5114
+      xoverRightD = new Track(p1Right.divergent, 1, 180);      
+      p3Right = new5117R(p3, 8, p2Right.divergent);
+      
+      // Finally the points back onto the inner/outer tracks.
+      innerRight = new5117R(p3Right.straight, 9, xoverRightD);
+      outerRight = new5117R(xoverRight, 10, p1RightCurve);
+    }
+  }
+  
 //////////////////////////////////////////////////////////////////////////
