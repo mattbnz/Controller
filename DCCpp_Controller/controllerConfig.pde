@@ -415,20 +415,24 @@
   }  
   
   void Cloverly2017() {
-    Layout baseLayout = new Layout(325,50,width-325,4180, 3100); // x in px, y in px, width in px, width in mm, height in mm
+    // x-width in mm stretched to accomodate top-layer alongside,
+    // instead of above the bottom layer.
+    // x in px, y in px, width in px, width in mm, height in mm
+    Layout baseLayout = new Layout(225,50,width-225,5000, 3100);
     
     // Small dots to visually help define the layout bounds in the display.
-    Track topLeft = new Track(baseLayout, 0, 0, 10, 0);
+    /*Track topLeft = new Track(baseLayout, 0, 0, 10, 0);
     Track topRight = new Track(baseLayout, 4170, 0, 10, 0);
     Track bottomLeft = new Track(baseLayout, 0, 3050, 10, 0);
-    Track bottomRight = new Track(baseLayout, 4170, 3050, 10, 0);
+    Track bottomRight = new Track(baseLayout, 4170, 3050, 10, 0);*/
 
     // The 180mm straight in the middle of the outer track curve at the
     // left hand end of the table serves as our anchor for the
-    // rest of the base loop.
-    Track outerLeftAnchor = new Track(baseLayout, 206, 517, 180, 270); // 1 x 5106
+    // rest of the base loop. The x values of these anchors are -100 of their
+    // true positions on the table to assist the visual layout in the program.
+    Track outerLeftAnchor = new Track(baseLayout, 106, 517, 180, 270); // 1 x 5106
     // The parallel 45mm+90mm straight in the inner track serves a similar purpose.
-    Track innerLeftAnchor = new Track(baseLayout, 279, 540, 45+90, 270);  // 1 x 5108 + 5107
+    Track innerLeftAnchor = new Track(baseLayout, 179, 540, 45+90, 270);  // 1 x 5108 + 5107
     
     // Remainder of the outer curve
     Track outerCurveBack = new Track(outerLeftAnchor, 0, 360, -90); // 3 x 5100
@@ -454,16 +458,22 @@
   }
   
   class MountainDescent {
-    Track c1, c2, c3;
-    Track d1, d2, d3;
+    Track c1, c2, c3, c4;
+    Track d1, d2, d3, d4;
     
     MountainDescent(Track top) {
       c1 = new Track(top, 1, 360, -30);
       d1 = new Track(c1, 1, 180*7);
       c2 = new Track(d1, 1, 360, -30*6);
-      d2 = new Track(c2, 1, (180*4)+90);
-      c3 = new Track(d2, 1, 360, 30*3);
-      d3 = new Track(c3, 1, 33+(180*3)+33+22);
+      // Altered from true geometry for aesthetic
+      // layout purposes on screen (e.g. minimise
+      // overlap between layers and intersections).
+      // Track is functionally accurate.
+      d2 = new Track(c2, 1, 180);
+      c3 = new Track(d2, 1, 360, 30*2);
+      d3 = new Track(c3, 1, (180*7)-20);
+      c4 = new Track(d3, 1, 360, 30);
+      d4 = new Track(c4, 1, (180*3));
     }
   }
   
@@ -474,8 +484,9 @@
     
     SpiralClimb(Track entry) {
        t1 = new Track(entry, 1, 360, 30);
-       t2 = new Track(t1, 1, 360, -30);
-       hillClimb = new Track(t2, 1, 180*10);
+       t2 = new Track(t1, 1, 360, -30); //<>//
+       // Actually 10, +5 to push out to the side for visual display.
+       hillClimb = new Track(t2, 1, (180*15)+50); 
        s1 = new Track(hillClimb, 1, 360, -30);
        s2 = new Track(s1, 1, 180*6);
        s3 = new Track(s2, 1, 360, -30*7);
@@ -485,7 +496,7 @@
     }
   }
 
-  class FrontFeature {
+  class FrontFeature { //<>//
     Track f1, f2, f3, f4;
     
     FrontFeature(Track prior) {
