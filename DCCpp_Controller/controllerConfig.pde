@@ -484,7 +484,7 @@
     Turnout entry, exit;
     Turnout t12t34;
     Turnout toFeature;
-    Turnout t1t2, t3t4, t5t6; //<>//
+    Turnout t1t2, t3t4, t5t6; //<>// //<>//
     Track t1C, t1, t2, t3C, t3, t4, t5, t6C, t6;
     Track toBack, toFront, eeLink, tfC1, tfC2;
     
@@ -496,7 +496,7 @@
       
       exit = new5117R(toBack, 30, tfC2);
       eeLink = new Track(exit.straight, 1, 90);
-      entry = new5117R(eeLink, 31, null); //<>//
+      entry = new5117R(eeLink, 31, null); //<>// //<>//
       t12t34 = new5117L(entry.divergent, 32, null);
       t5t6 = new5117L(entry.straight, 33, null);
       toFeature = new5117R(t12t34.straight, 34, null);
