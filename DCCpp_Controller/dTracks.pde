@@ -54,22 +54,29 @@ class Layout {
     }
   }
 
-  float toX(float layoutX) {
+  float toX(float layoutX, boolean warn) {
     float f = x[0] + layoutX*sFactor;
-    if (f > x[1]) {
-      println("Error in toX: ", layoutX, "->", f, " is outside the layout width!");
+    if (f > x[1] && warn) {
+      println("toX: ", layoutX, "->", f, " is outside the layout width", x[1], "!"); //<>//
+    }
+    return f;
+  }
+
+  float toX(float layoutX) {
+    return toX(layoutX, true);
+  }
+
+  float toY(float layoutY, boolean warn) {
+    float f = y[0] + layoutY*sFactor;
+    if (f > y[1] && warn) {
+      println("toY: ", layoutY, "->", f, " is outside the layout height", y[1], "!");
       //exit();
     }
     return f;
   }
 
   float toY(float layoutY) {
-    float f = y[0] + layoutY*sFactor;
-    if (f > y[1]) {
-      println("Error in toY: ", layoutY, "->", f, " is outside the layout height!");
-      //exit();
-    }
-    return f;
+    return toY(layoutY, true);
   }
 } // Layout Class
 
@@ -311,9 +318,11 @@ class Track extends DccComponent {
     ellipseMode(RADIUS);
     noFill();
     if (r==0) {
-      line(layout.toX(x[0]), layout.toY(y[0]), layout.toX(x[1]), layout.toY(y[1]));
+      line(layout.toX(x[0], false), layout.toY(y[0], false),
+           layout.toX(x[1], false), layout.toY(y[1], false));
     } else {
-      arc(layout.toX(xR), layout.toY(yR), r*layout.sFactor, r*layout.sFactor, aStart, aEnd);
+      arc(layout.toX(xR, false), layout.toY(yR, false),
+          r*layout.sFactor, r*layout.sFactor, aStart, aEnd);
     }
   } // display()
 } // Track Class
