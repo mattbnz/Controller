@@ -285,6 +285,14 @@ class Track extends DccComponent {
 
   //////////////////////////////////////////////////////////////////////////
 
+  float avgLayoutX() {
+    return (layout.toX(x[0]) + layout.toX(x[1]))/2.0;
+  }
+
+  float avgLayoutY() {
+    return (layout.toY(y[0]) + layout.toY(y[1]))/2.0;
+  }
+
   void display() {
 
     if (tStatus==1) {                // track is visible
